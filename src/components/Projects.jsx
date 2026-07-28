@@ -58,15 +58,15 @@ export default function Projects() {
           <p className="font-[family-name:var(--font-mono)] text-xs text-[#0058be] dark:text-[#60a5fa] tracking-[0.2em] uppercase mb-4">
             Selected Works / 2024
           </p>
-          <h2 className="text-4xl md:text-6xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight">
             Built with architectural{' '}
             <span className="text-[#0058be] dark:text-[#60a5fa]">precision</span>
           </h2>
         </div>
 
         <div className="reveal mb-8">
-          <div className="group grid md:grid-cols-5 gap-0 bg-white dark:bg-[#1a1c1c] border border-gray-200 dark:border-[#334155] rounded-2xl overflow-hidden hover:shadow-[0_2px_32px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_2px_32px_rgba(0,0,0,0.3)] hover:border-[#0058be] dark:hover:border-[#60a5fa] transition-all duration-300">
-            <div className="md:col-span-3 h-64 md:h-auto bg-gradient-to-br from-gray-200 to-gray-100 dark:from-[#334155] dark:to-[#1e293b] flex items-center justify-center relative overflow-hidden">
+          <div className="group grid grid-cols-1 md:grid-cols-5 gap-0 bg-white dark:bg-[#1a1c1c] border border-gray-200 dark:border-[#334155] rounded-2xl overflow-hidden hover:shadow-[0_2px_32px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_2px_32px_rgba(0,0,0,0.3)] hover:border-[#0058be] dark:hover:border-[#60a5fa] transition-all duration-300">
+            <div className="md:col-span-3 h-48 sm:h-64 md:h-auto bg-gradient-to-br from-gray-200 to-gray-100 dark:from-[#334155] dark:to-[#1e293b] flex items-center justify-center relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-[#0058be]/5 to-transparent group-hover:from-[#0058be]/10 transition-all duration-500" />
               <svg
                 className="w-16 h-16 text-gray-400 dark:text-[#4c4546] group-hover:text-[#0058be] dark:group-hover:text-[#60a5fa] transition-colors duration-300 relative z-10"
@@ -111,7 +111,7 @@ export default function Projects() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {secondaryProjects.map((project, index) => (
             <div
               key={index}
@@ -173,11 +173,11 @@ export default function Projects() {
           ))}
         </div>
 
-        <div className="reveal p-10 bg-black dark:bg-white rounded-2xl text-center">
-          <p className="text-lg text-gray-400 dark:text-[#4c4546] mb-2 font-[family-name:var(--font-display)]">
+        <div className="reveal p-6 sm:p-10 bg-black dark:bg-white rounded-2xl text-center">
+          <p className="text-base sm:text-lg text-gray-400 dark:text-[#4c4546] mb-2 font-[family-name:var(--font-display)]">
             Have a vision in mind?
           </p>
-          <h3 className="text-3xl md:text-4xl font-[family-name:var(--font-display)] font-bold text-white dark:text-black mb-6">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-[family-name:var(--font-display)] font-bold text-white dark:text-black mb-6">
             LET'S BUILD TOGETHER
           </h3>
           <a

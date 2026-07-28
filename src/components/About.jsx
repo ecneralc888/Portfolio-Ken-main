@@ -58,13 +58,13 @@ export default function About() {
           <p className="font-[family-name:var(--font-mono)] text-xs text-[#0058be] dark:text-[#60a5fa] tracking-[0.2em] uppercase mb-4">
             The Philosophy
           </p>
-          <h2 className="text-4xl md:text-6xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight max-w-3xl">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight max-w-3xl">
             I don't just build websites. I create digital experiences.
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-12 gap-8 mb-32">
-          <div className="md:col-span-7 reveal">
+        <div className="grid grid-cols-12 gap-8 mb-32">
+          <div className="col-span-12 md:col-span-7 reveal">
             <div className="w-full h-[500px] md:h-[600px] rounded-2xl bg-gradient-to-br from-gray-200 to-gray-100 dark:from-[#334155] dark:to-[#1e293b] border border-gray-200 dark:border-[#334155] flex items-center justify-center relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-[#0058be]/10 to-transparent" />
               <svg
@@ -77,7 +77,7 @@ export default function About() {
             </div>
           </div>
 
-          <div className="md:col-span-5 flex flex-col gap-4 reveal" style={{ animationDelay: '0.2s' }}>
+          <div className="col-span-12 md:col-span-5 flex flex-col gap-4 reveal" style={{ animationDelay: '0.2s' }}>
             {roles.map((role) => (
               <div
                 key={role.title}
@@ -111,7 +111,7 @@ export default function About() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-16 items-start">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
           <div className="reveal">
             <p className="font-[family-name:var(--font-mono)] text-xs text-[#0058be] dark:text-[#60a5fa] tracking-[0.2em] uppercase mb-4">
               The Story

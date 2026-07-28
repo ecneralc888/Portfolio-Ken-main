@@ -4,7 +4,7 @@ const skillCategories = [
   {
     title: 'Frontend Engineering',
     icon: 'terminal',
-    span: 'md:col-span-8',
+    span: 'col-span-12 md:col-span-8',
     skills: [
       { name: 'HTML5', icon: 'html', desc: 'Semantic markup & accessibility' },
       { name: 'CSS & Tailwind', icon: 'css', desc: 'Modern styling & utility-first CSS' },
@@ -16,7 +16,7 @@ const skillCategories = [
   {
     title: 'Creative Tools',
     icon: 'palette',
-    span: 'md:col-span-4',
+    span: 'col-span-12 md:col-span-4',
     skills: [
       { name: 'Figma', icon: 'draw', desc: 'UI/UX design & prototyping' },
       { name: 'UI Design', icon: 'design_services', desc: 'Visual design & systems' },
@@ -26,7 +26,7 @@ const skillCategories = [
   {
     title: 'Dev Ecosystem',
     icon: 'cloud',
-    span: 'md:col-span-12',
+    span: 'col-span-12 md:col-span-12',
     horizontal: true,
     skills: [
       { name: 'Git & GitHub', icon: 'fork_left', desc: 'Version control & collaboration' },
@@ -66,7 +66,7 @@ export default function Skills() {
           <p className="font-[family-name:var(--font-mono)] text-xs text-[#0058be] dark:text-[#60a5fa] tracking-[0.2em] uppercase mb-4">
             Expertise
           </p>
-          <h2 className="text-4xl md:text-6xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight">
             My Digital Toolbox
           </h2>
           <p className="text-[#4c4546] dark:text-[#94a3b8] mt-4 max-w-xl text-lg">
@@ -96,7 +96,7 @@ export default function Skills() {
                     {category.skills.map((skill) => (
                       <div
                         key={skill.name}
-                        className="group relative p-4 bg-gray-50 dark:bg-[#0f172a] border border-gray-100 dark:border-[#334155] rounded-lg hover:border-[#0058be] dark:hover:border-[#60a5fa] transition-all duration-300 overflow-hidden"
+                        className="group relative p-4 bg-gray-50 dark:bg-[#0f172a] border border-gray-100 dark:border-[#334155] rounded-lg hover:border-[#0058be] dark:hover:border-[#60a5fa] transition-all duration-300"
                       >
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_var(--mouse-x,_50%)_var(--mouse-y,_50%),_rgba(0,88,190,0.05),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <div className="relative flex items-center gap-3">
@@ -116,11 +116,11 @@ export default function Skills() {
                     ))}
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {category.skills.map((skill) => (
                       <div
                         key={skill.name}
-                        className="group relative p-4 bg-gray-50 dark:bg-[#0f172a] border border-gray-100 dark:border-[#334155] rounded-lg hover:border-[#0058be] dark:hover:border-[#60a5fa] transition-all duration-300 overflow-hidden"
+                        className="group relative p-4 bg-gray-50 dark:bg-[#0f172a] border border-gray-100 dark:border-[#334155] rounded-lg hover:border-[#0058be] dark:hover:border-[#60a5fa] transition-all duration-300"
                       >
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_var(--mouse-x,_50%)_var(--mouse-y,_50%),_rgba(0,88,190,0.05),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <div className="relative">

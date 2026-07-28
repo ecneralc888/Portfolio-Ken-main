@@ -39,14 +39,14 @@ export default function Hero() {
               </span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight mb-6">
               Hi, I'm John Ken.{' '}
               <span className="text-[#0058be] dark:text-[#60a5fa]">
                 Front End Developer.
               </span>
             </h1>
 
-            <p className="text-lg text-[#4c4546] dark:text-[#94a3b8] leading-relaxed max-w-lg mb-10">
+            <p className="text-base sm:text-lg text-[#4c4546] dark:text-[#94a3b8] leading-relaxed max-w-lg mb-10">
               Passionate about crafting clean, user-friendly digital experiences.
               I bring ideas to life through code and creative design.
             </p>
@@ -68,34 +68,12 @@ export default function Hero() {
           </div>
 
           <div className="relative reveal flex justify-center">
-            <div className="w-80 h-80 md:w-96 md:h-96 rounded-2xl bg-gradient-to-br from-gray-200 to-gray-100 dark:from-[#334155] dark:to-[#1e293b] border border-gray-200 dark:border-[#334155] flex items-center justify-center relative overflow-hidden">
+            <div className="w-full max-w-[280px] h-[280px] sm:max-w-80 sm:h-80 md:max-w-96 md:h-96 rounded-2xl bg-gradient-to-br from-gray-200 to-gray-100 dark:from-[#334155] dark:to-[#1e293b] border border-gray-200 dark:border-[#334155] flex items-center justify-center relative overflow-hidden">
               <img
                 src="/profile.jpg"
                 alt="John Ken Gerodias"
                 className="w-full h-full object-cover relative z-10"
               />
-            </div>
-
-            <div className="absolute -top-4 -right-4 bg-white dark:bg-[#1a1c1c] backdrop-blur-xl border border-gray-200 dark:border-[#334155] rounded-xl px-4 py-3 shadow-lg dark:shadow-black/20 animate-float">
-              <p className="font-[family-name:var(--font-mono)] text-xs text-[#4c4546] dark:text-[#94a3b8]">
-                React.js & Tailwind
-              </p>
-            </div>
-
-            <div className="absolute -bottom-4 -left-4 bg-[#1a1c1c] dark:bg-black border border-[#334155] dark:border-[#334155] rounded-xl px-4 py-3 shadow-lg dark:shadow-black/30 animate-float" style={{ animationDelay: '2s' }}>
-              <p className="font-[family-name:var(--font-mono)] text-xs text-gray-300">
-                <span className="text-[#0058be]">const</span>{' '}
-                <span className="text-green-400">dev</span> ={' '}
-                <span className="text-yellow-300">"creative"</span>;
-              </p>
-            </div>
-
-            <div className="absolute top-1/2 -right-6 bg-white dark:bg-[#1a1c1c] backdrop-blur-xl border border-gray-200 dark:border-[#334155] rounded-xl w-12 h-12 flex items-center justify-center shadow-lg dark:shadow-black/20 animate-float" style={{ animationDelay: '4s' }}>
-              <svg className="w-6 h-6 text-[#4c4546] dark:text-[#94a3b8]" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19 28.5C24.2467 28.5 28.5 24.2467 28.5 19C28.5 13.7533 24.2467 9.5 19 9.5C13.7533 9.5 9.5 13.7533 9.5 19C9.5 24.2467 13.7533 28.5 19 28.5Z" stroke="currentColor" strokeWidth="2"/>
-                <path d="M9.5 19H28.5" stroke="currentColor" strokeWidth="2"/>
-                <path d="M19 9.5V28.5" stroke="currentColor" strokeWidth="2"/>
-              </svg>
             </div>
           </div>
         </div>

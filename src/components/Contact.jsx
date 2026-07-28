@@ -45,12 +45,12 @@ export default function Contact() {
   return (
     <section id="contact" className="py-24 md:py-40 px-6" ref={sectionRef}>
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
           <div className="reveal">
             <p className="font-[family-name:var(--font-mono)] text-xs text-[#0058be] dark:text-[#60a5fa] tracking-[0.2em] uppercase mb-4">
               Contact
             </p>
-            <h2 className="text-4xl md:text-5xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight mb-6">
               Let's work together
             </h2>
             <p className="text-[#4c4546] dark:text-[#94a3b8] leading-relaxed mb-10">

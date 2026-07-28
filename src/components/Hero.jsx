@@ -68,7 +68,7 @@ export default function Hero() {
           </div>
 
           <div className="relative reveal flex justify-center">
-            <div className="w-full max-w-[280px] h-[280px] sm:max-w-80 sm:h-80 md:max-w-96 md:h-96 rounded-2xl bg-gradient-to-br from-gray-200 to-gray-100 dark:from-[#334155] dark:to-[#1e293b] border border-gray-200 dark:border-[#334155] flex items-center justify-center relative overflow-hidden">
+            <div className="w-full max-w-[280px] h-[280px] sm:max-w-80 sm:h-80 md:max-w-85 md:h-96 rounded-2xl bg-gradient-to-br from-gray-200 to-gray-100 dark:from-[#334155] dark:to-[#1e293b] border border-gray-200 dark:border-[#334155] flex items-center justify-center relative overflow-hidden">
               <img
                 src="/profile.jpg"
                 alt="John Ken Gerodias"

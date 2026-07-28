@@ -69,14 +69,11 @@ export default function Hero() {
 
           <div className="relative reveal flex justify-center">
             <div className="w-80 h-80 md:w-96 md:h-96 rounded-2xl bg-gradient-to-br from-gray-200 to-gray-100 dark:from-[#334155] dark:to-[#1e293b] border border-gray-200 dark:border-[#334155] flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#0058be]/10 to-transparent" />
-              <svg
-                className="w-28 h-28 text-gray-400 dark:text-[#4c4546] relative z-10"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-              </svg>
+              <img
+                src="/profile.jpg"
+                alt="John Ken Gerodias"
+                className="w-full h-full object-cover relative z-10"
+              />
             </div>
 
             <div className="absolute -top-4 -right-4 bg-white dark:bg-[#1a1c1c] backdrop-blur-xl border border-gray-200 dark:border-[#334155] rounded-xl px-4 py-3 shadow-lg dark:shadow-black/20 animate-float">

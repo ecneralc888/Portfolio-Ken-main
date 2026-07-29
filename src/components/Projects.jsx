@@ -78,22 +78,26 @@ export default function Projects() {
                 {featuredProject.description}
               </p>
               <div className="flex items-center gap-4">
-                <a
-                  href={featuredProject.live}
-                  onClick={(e) => e.stopPropagation()}
-                  className="text-sm text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] flex items-center gap-1"
+                <span
+                  onClick={(e) => { e.stopPropagation(); window.open(featuredProject.live, '_blank', 'noopener,noreferrer') }}
+                  role="link"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter') window.open(featuredProject.live, '_blank', 'noopener,noreferrer') }}
+                  className="text-sm text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] flex items-center gap-1 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[16px]">open_in_new</span>
                   Live Demo
-                </a>
-                <a
-                  href={featuredProject.code}
-                  onClick={(e) => e.stopPropagation()}
-                  className="text-sm text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] flex items-center gap-1"
+                </span>
+                <span
+                  onClick={(e) => { e.stopPropagation(); window.open(featuredProject.code, '_blank', 'noopener,noreferrer') }}
+                  role="link"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter') window.open(featuredProject.code, '_blank', 'noopener,noreferrer') }}
+                  className="text-sm text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] flex items-center gap-1 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[16px]">code</span>
                   Source Code
-                </a>
+                </span>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100 dark:border-[#334155]">
                 <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#0058be] dark:text-[#60a5fa] font-[family-name:var(--font-mono)] tracking-wider group/link">
@@ -148,22 +152,26 @@ export default function Projects() {
                   {project.description}
                 </p>
                 <div className="flex gap-4">
-                  <a
-                    href={project.live}
-                    onClick={(e) => e.stopPropagation()}
-                    className="text-sm text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] flex items-center gap-1"
+                  <span
+                    onClick={(e) => { e.stopPropagation(); window.open(project.live, '_blank', 'noopener,noreferrer') }}
+                    role="link"
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter') window.open(project.live, '_blank', 'noopener,noreferrer') }}
+                    className="text-sm text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] flex items-center gap-1 cursor-pointer"
                   >
                     <span className="material-symbols-outlined text-[16px]">open_in_new</span>
                     Live Demo
-                  </a>
-                  <a
-                    href={project.code}
-                    onClick={(e) => e.stopPropagation()}
-                    className="text-sm text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] flex items-center gap-1"
+                  </span>
+                  <span
+                    onClick={(e) => { e.stopPropagation(); window.open(project.code, '_blank', 'noopener,noreferrer') }}
+                    role="link"
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter') window.open(project.code, '_blank', 'noopener,noreferrer') }}
+                    className="text-sm text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] flex items-center gap-1 cursor-pointer"
                   >
                     <span className="material-symbols-outlined text-[16px]">code</span>
                     Code
-                  </a>
+                  </span>
                 </div>
               </div>
             </Link>

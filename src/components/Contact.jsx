@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import HCaptcha from '@hcaptcha/react-hcaptcha'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -6,9 +7,11 @@ export default function Contact() {
     email: '',
     message: '',
   })
-  const [submitted, setSubmitted] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
   const [sending, setSending] = useState(false)
   const [error, setError] = useState('')
+  const [captchaToken, setCaptchaToken] = useState('')
+  const captchaRef = useRef(null)
   const sectionRef = useRef(null)
 
   useEffect(() => {
@@ -29,22 +32,11 @@ export default function Contact() {
       reveals.forEach((r) => observer.observe(r))
     }
 
-    const checkCaptcha = setInterval(() => {
-      const captchaEl = document.querySelector('.h-captcha')
-      if (captchaEl && window.hcaptcha) {
-        try {
-          window.hcaptcha.render(captchaEl)
-          clearInterval(checkCaptcha)
-        } catch {}
-      }
-    }, 300)
-
     return () => {
       if (el) {
         const reveals = el.querySelectorAll('.reveal')
         reveals.forEach((r) => observer.unobserve(r))
       }
-      clearInterval(checkCaptcha)
     }
   }, [])
 
@@ -55,28 +47,43 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+
+    if (!captchaToken) {
+      setError('Please complete the captcha.')
+      return
+    }
+
     setSending(true)
 
-    const formData = new FormData(e.target)
-    formData.append('access_key', '70d173bb-ab8f-4742-8fd4-62ac0178c962')
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: '70d173bb-ab8f-4742-8fd4-62ac0178c962',
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          subject: 'New Contact Form Submission from Portfolio',
+          'h-captcha-response': captchaToken,
+        }),
+      })
+      const data = await response.json()
+      console.log('Web3Forms response:', data)
 
-    const response = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      body: formData,
-    })
-    const data = await response.json()
-    console.log('Web3Forms response:', data)
-
-    setSending(false)
-
-    if (data.success) {
-      setSubmitted(true)
-      setTimeout(() => {
+      if (data.success) {
+        setShowSuccess(true)
         setFormData({ name: '', email: '', message: '' })
-        setSubmitted(false)
-      }, 4000)
-    } else {
-      setError(data.message || 'Submission failed. Please check the captcha.')
+        setCaptchaToken('')
+        if (captchaRef.current) captchaRef.current.resetCaptcha()
+      } else {
+        setError(data.message || 'Submission failed — check console.')
+      }
+    } catch (err) {
+      console.error('Fetch error:', err)
+      setError('Network error — check console.')
+    } finally {
+      setSending(false)
     }
   }
 
@@ -89,11 +96,11 @@ export default function Contact() {
               Contact
             </p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight mb-6">
-              Let's create something{' '}
+              Let&apos;s create something{' '}
               <span className="text-[#0058be] dark:text-[#60a5fa]">great</span> together
             </h2>
             <p className="text-[#4c4546] dark:text-[#94a3b8] leading-relaxed mb-10">
-              Whether you have a project idea, an internship opportunity, or just want to connect — I'd love to hear from you. I'm always open to collaborating on interesting projects.
+              Whether you have a project idea, an internship opportunity, or just want to connect &mdash; I&apos;d love to hear from you. I&apos;m always open to collaborating on interesting projects.
             </p>
 
             <div className="space-y-5 mb-8">
@@ -158,65 +165,88 @@ export default function Contact() {
           </div>
 
           <div className="reveal" style={{ animationDelay: '0.2s' }}>
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6"
-            >
-              <input type="hidden" name="subject" value="New Contact Form Submission from Portfolio" />
-              <div className="border-b border-gray-300 dark:border-[#334155] focus-within:border-[#0058be] dark:focus-within:border-[#60a5fa] transition-colors">
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full py-3 bg-transparent text-black dark:text-white placeholder-gray-400 dark:placeholder-[#4c4546] focus:outline-none font-[family-name:var(--font-sans)]"
-                  placeholder="Your Name"
-                />
+            {showSuccess ? (
+              <div className="flex items-center justify-center min-h-[400px]">
+                <div className="text-center">
+                  <span className="material-symbols-outlined text-6xl text-green-500 mb-4 block">check_circle</span>
+                  <h3 className="text-xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white mb-2">
+                    Message Sent!
+                  </h3>
+                  <p className="text-[#4c4546] dark:text-[#94a3b8] mb-6">
+                    I&apos;ll get back to you soon.
+                  </p>
+                  <button
+                    onClick={() => setShowSuccess(false)}
+                    className="px-6 py-2.5 bg-black dark:bg-white text-white dark:text-black rounded-lg hover:opacity-80 transition-opacity text-sm font-[family-name:var(--font-mono)] tracking-wider font-semibold"
+                  >
+                    SEND ANOTHER
+                  </button>
+                </div>
               </div>
-              <div className="border-b border-gray-300 dark:border-[#334155] focus-within:border-[#0058be] dark:focus-within:border-[#60a5fa] transition-colors">
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full py-3 bg-transparent text-black dark:text-white placeholder-gray-400 dark:placeholder-[#4c4546] focus:outline-none font-[family-name:var(--font-sans)]"
-                  placeholder="Your Email"
-                />
-              </div>
-              <div className="border-b border-gray-300 dark:border-[#334155] focus-within:border-[#0058be] dark:focus-within:border-[#60a5fa] transition-colors">
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="5"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  className="w-full py-3 bg-transparent text-black dark:text-white placeholder-gray-400 dark:placeholder-[#4c4546] focus:outline-none font-[family-name:var(--font-sans)] resize-none"
-                  placeholder="Tell me about your project or opportunity..."
-                />
-              </div>
-              <div className="h-captcha" data-captcha="true" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"></div>
-              {error && (
-                <p className="text-red-500 text-sm text-center">{error}</p>
-              )}
-              <button
-                type="submit"
-                disabled={sending}
-                className={`w-full px-8 py-3 font-semibold font-[family-name:var(--font-mono)] text-sm tracking-wider rounded-lg transition-all duration-300 ${
-                  submitted
-                    ? 'bg-green-500 text-white'
-                    : sending
-                    ? 'bg-gray-400 dark:bg-gray-600 text-white cursor-not-allowed'
-                    : 'bg-black dark:bg-white text-white dark:text-black hover:opacity-80'
-                }`}
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-6"
               >
-                {submitted ? 'MESSAGE SENT ✓' : sending ? 'SENDING...' : 'SEND MESSAGE'}
-              </button>
-            </form>
+                <input type="hidden" name="subject" value="New Contact Form Submission from Portfolio" />
+                <div className="border-b border-gray-300 dark:border-[#334155] focus-within:border-[#0058be] dark:focus-within:border-[#60a5fa] transition-colors">
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full py-3 bg-transparent text-black dark:text-white placeholder-gray-400 dark:placeholder-[#4c4546] focus:outline-none font-[family-name:var(--font-sans)]"
+                    placeholder="Your Name"
+                  />
+                </div>
+                <div className="border-b border-gray-300 dark:border-[#334155] focus-within:border-[#0058be] dark:focus-within:border-[#60a5fa] transition-colors">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full py-3 bg-transparent text-black dark:text-white placeholder-gray-400 dark:placeholder-[#4c4546] focus:outline-none font-[family-name:var(--font-sans)]"
+                    placeholder="Your Email"
+                  />
+                </div>
+                <div className="border-b border-gray-300 dark:border-[#334155] focus-within:border-[#0058be] dark:focus-within:border-[#60a5fa] transition-colors">
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    className="w-full py-3 bg-transparent text-black dark:text-white placeholder-gray-400 dark:placeholder-[#4c4546] focus:outline-none font-[family-name:var(--font-sans)] resize-none"
+                    placeholder="Tell me about your project or opportunity..."
+                  />
+                </div>
+                {error && (
+                  <p className="text-red-500 text-sm text-center">{error}</p>
+                )}
+                <HCaptcha
+                  ref={captchaRef}
+                  sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"
+                  reCaptchaCompat={false}
+                  onVerify={(token) => setCaptchaToken(token)}
+                />
+                <button
+                  type="submit"
+                  disabled={sending}
+                  className={`w-full px-8 py-3 font-semibold font-[family-name:var(--font-mono)] text-sm tracking-wider rounded-lg transition-all duration-300 ${
+                    sending
+                      ? 'bg-gray-400 dark:bg-gray-600 text-white cursor-not-allowed'
+                      : 'bg-black dark:bg-white text-white dark:text-black hover:opacity-80'
+                  }`}
+                >
+                  {sending ? 'SENDING...' : 'SEND MESSAGE'}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>

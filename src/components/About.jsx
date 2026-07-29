@@ -1,32 +1,5 @@
 import { useEffect, useRef } from 'react'
-
-const roles = [
-  {
-    title: 'Developer',
-    subtitle: 'Engineering',
-    tags: ['Frontend', 'React', 'JavaScript', 'Responsive Design'],
-    icon: 'code',
-  },
-  {
-    title: 'Designer',
-    subtitle: 'Creative',
-    tags: ['UI Design', 'UX', 'Design Systems', 'Prototyping'],
-    icon: 'palette',
-  },
-  {
-    title: 'Student',
-    subtitle: 'Academic',
-    tags: ['BSIT Student', 'Tech Explorer', 'Continuous Learner'],
-    icon: 'school',
-  },
-]
-
-const stats = [
-  { value: '5+', label: 'Projects Completed' },
-  { value: '3+', label: 'Years Learning' },
-  { value: '10+', label: 'Technologies' },
-  { value: '100%', label: 'Dedication' },
-]
+import { stats } from '../data/stats'
 
 export default function About() {
   const sectionRef = useRef(null)
@@ -56,83 +29,34 @@ export default function About() {
       <div className="max-w-6xl mx-auto">
         <div className="reveal mb-16">
           <p className="font-[family-name:var(--font-mono)] text-xs text-[#0058be] dark:text-[#60a5fa] tracking-[0.2em] uppercase mb-4">
-            The Philosophy
+            About
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight max-w-3xl">
-            I don't just build websites. I create digital experiences.
+            Turning ideas into{' '}
+            <span className="text-[#0058be] dark:text-[#60a5fa]">clean, functional</span> web experiences
           </h2>
         </div>
 
-        <div className="grid grid-cols-12 gap-8 mb-32">
-          <div className="col-span-12 md:col-span-7 reveal">
-            <div className="w-full h-[500px] md:h-[600px] rounded-2xl bg-gradient-to-br from-gray-200 to-gray-100 dark:from-[#334155] dark:to-[#1e293b] border border-gray-200 dark:border-[#334155] flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#0058be]/10 to-transparent" />
-              <svg
-                className="w-32 h-32 text-gray-400 dark:text-[#4c4546] relative z-10"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-              </svg>
+        <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-start mb-24">
+          <div className="reveal">
+            <div className="w-full h-[400px] md:h-[500px] rounded-2xl bg-gradient-to-br from-gray-200 to-gray-100 dark:from-[#334155] dark:to-[#1e293b] border border-gray-200 dark:border-[#334155] overflow-hidden flex items-center justify-center">
+              <img
+                src="/profile.jpg"
+                alt="About John Ken Gerodias"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
 
-          <div className="col-span-12 md:col-span-5 flex flex-col gap-4 reveal" style={{ animationDelay: '0.2s' }}>
-            {roles.map((role) => (
-              <div
-                key={role.title}
-                className="group p-6 bg-white dark:bg-[#1a1c1c] border border-gray-200 dark:border-[#334155] rounded-xl hover:border-[#0058be] dark:hover:border-[#60a5fa] transition-all duration-300 hover:shadow-[0_2px_32px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_2px_32px_rgba(0,0,0,0.3)]"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="material-symbols-outlined text-[#0058be] dark:text-[#60a5fa] text-xl">
-                    {role.icon}
-                  </span>
-                  <div>
-                    <h3 className="text-sm font-bold text-black dark:text-white font-[family-name:var(--font-display)]">
-                      {role.title}
-                    </h3>
-                    <p className="font-[family-name:var(--font-mono)] text-[10px] text-[#7e7576] dark:text-[#94a3b8] tracking-wider uppercase">
-                      {role.subtitle}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {role.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 bg-gray-100 dark:bg-[#334155] font-[family-name:var(--font-mono)] text-[10px] text-[#4c4546] dark:text-[#94a3b8] tracking-wider rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-          <div className="reveal">
-            <p className="font-[family-name:var(--font-mono)] text-xs text-[#0058be] dark:text-[#60a5fa] tracking-[0.2em] uppercase mb-4">
-              The Story
-            </p>
-            <h3 className="text-3xl md:text-4xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-tight mb-6">
-              A Passionate Developer Based in the Philippines
-            </h3>
-          </div>
-
           <div className="reveal" style={{ animationDelay: '0.2s' }}>
+            <p className="text-[#4c4546] dark:text-[#94a3b8] leading-relaxed mb-6 text-lg">
+              I'm a BSIT student at STI College Balagtas, graduating in 2026. My journey into frontend development started with curiosity about how websites work — and turned into a passion for building clean, responsive interfaces that people enjoy using.
+            </p>
             <p className="text-[#4c4546] dark:text-[#94a3b8] leading-relaxed mb-6">
-              I'm a web developer with a strong passion for creating beautiful,
-              functional, and user-centered digital experiences. I enjoy working
-              with modern technologies and am always looking for new challenges
-              that push my skills further.
+              During my internship at Boon Pharma Corp, I worked on front-end features for an e-commerce platform, where I learned what it takes to build for real users in a professional environment. I'm currently expanding my skills in modern frameworks and best practices.
             </p>
             <p className="text-[#4c4546] dark:text-[#94a3b8] leading-relaxed mb-10">
-              When I'm not coding, you can find me exploring new tools,
-              learning about design trends, or collaborating with like-minded
-              creatives. I believe great software is built with both technical
-              precision and creative vision.
+              My goal is to join a team where I can contribute to production web applications, learn from experienced developers, and grow into a confident frontend engineer.
             </p>
 
             <div className="grid grid-cols-2 gap-4">

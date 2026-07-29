@@ -51,39 +51,41 @@ export default function Contact() {
               Contact
             </p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight mb-6">
-              Let's work together
+              Let's create something{' '}
+              <span className="text-[#0058be] dark:text-[#60a5fa]">great</span> together
             </h2>
             <p className="text-[#4c4546] dark:text-[#94a3b8] leading-relaxed mb-10">
-              I'm always open to discussing new projects, creative ideas, or
-              opportunities to be part of your vision. Feel free to reach out!
+              Whether you have a project idea, an internship opportunity, or just want to connect — I'd love to hear from you. I'm always open to collaborating on interesting projects.
             </p>
 
             <div className="space-y-5 mb-8">
               <div className="flex items-center gap-4">
-                <span className="material-symbols-outlined text-[#0058be] dark:text-[#60a5fa] text-xl">
-                  mail
-                </span>
+                <span className="material-symbols-outlined text-[#0058be] dark:text-[#60a5fa] text-xl">mail</span>
                 <div>
-                  <p className="font-[family-name:var(--font-mono)] text-[10px] text-[#7e7576] dark:text-[#94a3b8] tracking-wider uppercase">
-                    Email
-                  </p>
-                  <p className="text-black dark:text-white font-medium">
-                    johnken.gerodias@email.com
-                  </p>
+                  <p className="font-[family-name:var(--font-mono)] text-[10px] text-[#7e7576] dark:text-[#94a3b8] tracking-wider uppercase">Email</p>
+                  <p className="text-black dark:text-white font-medium">JohnKenGerodias05@gmail.com</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
-                <span className="material-symbols-outlined text-[#0058be] dark:text-[#60a5fa] text-xl">
-                  location_on
-                </span>
+                <span className="material-symbols-outlined text-[#0058be] dark:text-[#60a5fa] text-xl">location_on</span>
                 <div>
-                  <p className="font-[family-name:var(--font-mono)] text-[10px] text-[#7e7576] dark:text-[#94a3b8] tracking-wider uppercase">
-                    Location
-                  </p>
-                  <p className="text-black dark:text-white font-medium">
-                    Philippines
-                  </p>
+                  <p className="font-[family-name:var(--font-mono)] text-[10px] text-[#7e7576] dark:text-[#94a3b8] tracking-wider uppercase">Location</p>
+                  <p className="text-black dark:text-white font-medium">Santol, Balagtas, Bulacan, Philippines</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <span className="material-symbols-outlined text-[#0058be] dark:text-[#60a5fa] text-xl">download</span>
+                <div>
+                  <p className="font-[family-name:var(--font-mono)] text-[10px] text-[#7e7576] dark:text-[#94a3b8] tracking-wider uppercase">Resume</p>
+                  <a
+                    href="/Resume-JohnKenGerodias.pdf"
+                    download
+                    className="text-black dark:text-white font-medium hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors"
+                  >
+                    Download my resume
+                  </a>
                 </div>
               </div>
             </div>
@@ -110,11 +112,9 @@ export default function Contact() {
               <a
                 href="#"
                 className="w-10 h-10 rounded-full bg-gray-100 dark:bg-[#334155] flex items-center justify-center text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] hover:bg-gray-200 dark:hover:bg-[#475569] transition-all duration-300"
-                aria-label="Facebook"
+                aria-label="GitHub profile"
               >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
+                <span className="material-symbols-outlined text-[18px]">open_in_new</span>
               </a>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full py-3 bg-transparent text-black dark:text-white placeholder-gray-400 dark:placeholder-[#4c4546] focus:outline-none font-[family-name:var(--font-sans)] resize-none"
-                  placeholder="Tell me about your project..."
+                  placeholder="Tell me about your project or opportunity..."
                 />
               </div>
               <button
@@ -165,7 +165,7 @@ export default function Contact() {
                     : 'bg-black dark:bg-white text-white dark:text-black hover:opacity-80'
                 }`}
               >
-                {submitted ? 'MESSAGE SENT' : 'SEND MESSAGE'}
+                {submitted ? 'MESSAGE SENT ✓' : 'SEND MESSAGE'}
               </button>
             </form>
           </div>

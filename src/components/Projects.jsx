@@ -1,32 +1,6 @@
 import { useEffect, useRef } from 'react'
-
-const featuredProject = {
-  title: 'E-Commerce Platform',
-  description:
-    'A full-stack e-commerce website with product listings, cart functionality, and secure checkout integration. Built with modern technologies for a seamless shopping experience.',
-  tags: ['React', 'Node.js', 'MongoDB', 'Tailwind'],
-  live: '#',
-  code: '#',
-}
-
-const secondaryProjects = [
-  {
-    title: 'Task Management App',
-    description:
-      'A sleek productivity app that lets users create, organize, and track tasks with drag-and-drop boards.',
-    tags: ['React', 'Firebase', 'Tailwind CSS'],
-    live: '#',
-    code: '#',
-  },
-  {
-    title: 'Weather Dashboard',
-    description:
-      'A real-time weather application displaying current conditions and forecasts using a third-party API.',
-    tags: ['JavaScript', 'REST API', 'CSS3'],
-    live: '#',
-    code: '#',
-  },
-]
+import { Link } from 'react-router-dom'
+import { featuredProject, secondaryProjects } from '../data/projects'
 
 export default function Projects() {
   const sectionRef = useRef(null)
@@ -56,16 +30,19 @@ export default function Projects() {
       <div className="max-w-6xl mx-auto">
         <div className="reveal mb-16">
           <p className="font-[family-name:var(--font-mono)] text-xs text-[#0058be] dark:text-[#60a5fa] tracking-[0.2em] uppercase mb-4">
-            Selected Works / 2024
+            Selected Works
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white leading-[1.1] tracking-tight">
-            Built with architectural{' '}
-            <span className="text-[#0058be] dark:text-[#60a5fa]">precision</span>
+            Projects I've{' '}
+            <span className="text-[#0058be] dark:text-[#60a5fa]">built</span>
           </h2>
         </div>
 
         <div className="reveal mb-8">
-          <div className="group grid grid-cols-1 md:grid-cols-5 gap-0 bg-white dark:bg-[#1a1c1c] border border-gray-200 dark:border-[#334155] rounded-2xl overflow-hidden hover:shadow-[0_2px_32px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_2px_32px_rgba(0,0,0,0.3)] hover:border-[#0058be] dark:hover:border-[#60a5fa] transition-all duration-300">
+          <Link
+            to={`/projects/${featuredProject.slug}`}
+            className="group grid grid-cols-1 md:grid-cols-5 gap-0 bg-white dark:bg-[#1a1c1c] border border-gray-200 dark:border-[#334155] rounded-2xl overflow-hidden hover:shadow-[0_2px_32px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_2px_32px_rgba(0,0,0,0.3)] hover:border-[#0058be] dark:hover:border-[#60a5fa] transition-all duration-300"
+          >
             <div className="md:col-span-3 h-48 sm:h-64 md:h-auto bg-gradient-to-br from-gray-200 to-gray-100 dark:from-[#334155] dark:to-[#1e293b] flex items-center justify-center relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-[#0058be]/5 to-transparent group-hover:from-[#0058be]/10 transition-all duration-500" />
               <svg
@@ -100,21 +77,39 @@ export default function Projects() {
               <p className="text-[#4c4546] dark:text-[#94a3b8] text-sm leading-relaxed mb-6">
                 {featuredProject.description}
               </p>
-              <a
-                href={featuredProject.live}
-                className="inline-flex items-center gap-2 text-sm font-semibold text-black dark:text-white hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] tracking-wider"
-              >
-                VIEW CASE STUDY
-                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-              </a>
+              <div className="flex items-center gap-4">
+                <a
+                  href={featuredProject.live}
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-sm text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] flex items-center gap-1"
+                >
+                  <span className="material-symbols-outlined text-[16px]">open_in_new</span>
+                  Live Demo
+                </a>
+                <a
+                  href={featuredProject.code}
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-sm text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] flex items-center gap-1"
+                >
+                  <span className="material-symbols-outlined text-[16px]">code</span>
+                  Source Code
+                </a>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-100 dark:border-[#334155]">
+                <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#0058be] dark:text-[#60a5fa] font-[family-name:var(--font-mono)] tracking-wider group/link">
+                  VIEW CASE STUDY
+                  <span className="material-symbols-outlined text-[16px] transition-transform duration-300 group-hover/link:translate-x-1">arrow_forward</span>
+                </span>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {secondaryProjects.map((project, index) => (
-            <div
-              key={index}
+            <Link
+              key={project.id}
+              to={`/projects/${project.slug}`}
               className="reveal group bg-white dark:bg-[#1a1c1c] border border-gray-200 dark:border-[#334155] rounded-2xl overflow-hidden hover:shadow-[0_2px_32px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_2px_32px_rgba(0,0,0,0.3)] hover:border-[#0058be] dark:hover:border-[#60a5fa] transition-all duration-300"
               style={{ animationDelay: `${(index + 1) * 0.15}s` }}
             >
@@ -155,6 +150,7 @@ export default function Projects() {
                 <div className="flex gap-4">
                   <a
                     href={project.live}
+                    onClick={(e) => e.stopPropagation()}
                     className="text-sm text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] flex items-center gap-1"
                   >
                     <span className="material-symbols-outlined text-[16px]">open_in_new</span>
@@ -162,14 +158,15 @@ export default function Projects() {
                   </a>
                   <a
                     href={project.code}
+                    onClick={(e) => e.stopPropagation()}
                     className="text-sm text-[#4c4546] dark:text-[#94a3b8] hover:text-[#0058be] dark:hover:text-[#60a5fa] transition-colors font-[family-name:var(--font-mono)] flex items-center gap-1"
                   >
                     <span className="material-symbols-outlined text-[16px]">code</span>
-                    Source Code
+                    Code
                   </a>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

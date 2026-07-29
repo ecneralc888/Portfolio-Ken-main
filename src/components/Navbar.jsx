@@ -2,16 +2,19 @@ import { useState, useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
 
 const navLinks = [
-  { name: 'PROJECTS', href: '#projects' },
-  { name: 'ABOUT', href: '#about' },
-  { name: 'SKILLS', href: '#skills' },
-  { name: 'CONTACT', href: '#contact' },
+  { name: 'Home', href: '#home' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'About', href: '#about' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Resume', href: '#resume' },
+  { name: 'Contact', href: '#contact' },
 ]
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
+  const [activeSection, setActiveSection] = useState('home')
   const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
@@ -19,13 +22,25 @@ export default function Navbar() {
       const currentScrollY = window.scrollY
       setHidden(currentScrollY > lastScrollY && currentScrollY > 100)
       setLastScrollY(currentScrollY)
+
+      const sections = navLinks.map((link) => link.href.slice(1))
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i])
+        if (el) {
+          const rect = el.getBoundingClientRect()
+          if (rect.top <= 150) {
+            setActiveSection(sections[i])
+            break
+          }
+        }
+      }
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [lastScrollY])
 
   return (
-    <div className={`fixed top-0 left-0 right-0 z-50 flex justify-center px-6 pt-5 transition-transform duration-300 ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
+    <div className={`fixed top-3 left-0 right-0 z-50 flex justify-center px-6 transition-transform duration-300 ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
       <nav className="flex items-center gap-2 bg-white/80 dark:bg-[#1a1c1c]/80 backdrop-blur-xl border border-gray-200 dark:border-[#334155] rounded-full px-3 py-2 shadow-[0_2px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_32px_rgba(0,0,0,0.2)]">
         <a href="#home" className="flex items-center gap-2 px-4 py-1.5 font-[family-name:var(--font-mono)] text-sm font-medium text-black dark:text-white tracking-wider">
           <span className="material-symbols-outlined text-[20px]">grid_view</span>
@@ -33,15 +48,23 @@ export default function Navbar() {
         </a>
 
         <div className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="px-4 py-1.5 text-xs font-[family-name:var(--font-mono)] font-medium text-[#4c4546] dark:text-[#94a3b8] hover:text-black dark:hover:text-white transition-colors tracking-widest"
-            >
-              {link.name}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const sectionId = link.href.slice(1)
+            const isActive = activeSection === sectionId
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                className={`px-4 py-1.5 text-xs font-[family-name:var(--font-mono)] font-medium tracking-widest transition-colors ${
+                  isActive
+                    ? 'text-black dark:text-white'
+                    : 'text-[#4c4546] dark:text-[#94a3b8] hover:text-black dark:hover:text-white'
+                }`}
+              >
+                {link.name}
+              </a>
+            )
+          })}
         </div>
 
         <button

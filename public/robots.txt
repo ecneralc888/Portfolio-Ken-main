@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://johnkengerodias.vercel.app/sitemap.xml

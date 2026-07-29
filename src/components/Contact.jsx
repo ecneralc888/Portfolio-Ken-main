@@ -7,7 +7,10 @@ export default function Contact() {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
   const sectionRef = useRef(null)
+  const formRef = useRef(null)
+  const confirmedRef = useRef(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -33,21 +36,24 @@ export default function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = (e) => {
+    if (!confirmedRef.current) {
+      e.preventDefault()
+      setShowConfirm(true)
+      return
+    }
+    confirmedRef.current = false
     setSubmitted(true)
+    setTimeout(() => {
+      setFormData({ name: '', email: '', message: '' })
+      setSubmitted(false)
+    }, 4000)
+  }
 
-    const formDataObj = new FormData(e.target)
-    const data = Object.fromEntries(formDataObj)
-    const json = JSON.stringify(data)
-
-    await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: json,
-    })
-
-    setFormData({ name: '', email: '', message: '' })
+  const handleConfirm = () => {
+    setShowConfirm(false)
+    confirmedRef.current = true
+    formRef.current.requestSubmit()
   }
 
   return (
@@ -128,10 +134,15 @@ export default function Contact() {
           </div>
 
           <div className="reveal" style={{ animationDelay: '0.2s' }}>
-            <form onSubmit={handleSubmit} action="https://api.web3forms.com/submit" method="POST" className="space-y-6">
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              action="https://api.web3forms.com/submit"
+              method="POST"
+              className="space-y-6"
+            >
               <input type="hidden" name="access_key" value="70d173bb-ab8f-4742-8fd4-62ac0178c962" />
               <input type="hidden" name="subject" value="New Contact Form Submission from Portfolio" />
-              <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
               <div className="border-b border-gray-300 dark:border-[#334155] focus-within:border-[#0058be] dark:focus-within:border-[#60a5fa] transition-colors">
                 <input
                   type="text"
@@ -168,9 +179,10 @@ export default function Contact() {
                   placeholder="Tell me about your project or opportunity..."
                 />
               </div>
+              <div className="h-captcha" data-captcha="true" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"></div>
               <button
                 type="submit"
-                className={`px-8 py-3 font-semibold font-[family-name:var(--font-mono)] text-sm tracking-wider rounded-lg transition-all duration-300 ${
+                className={`w-full px-8 py-3 font-semibold font-[family-name:var(--font-mono)] text-sm tracking-wider rounded-lg transition-all duration-300 ${
                   submitted
                     ? 'bg-green-500 text-white'
                     : 'bg-black dark:bg-white text-white dark:text-black hover:opacity-80'
@@ -182,6 +194,52 @@ export default function Contact() {
           </div>
         </div>
       </div>
+
+      {showConfirm && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white dark:bg-[#1a1c1c] border border-gray-200 dark:border-[#334155] rounded-2xl p-8 max-w-md w-full shadow-2xl">
+            <h3 className="text-xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white mb-6">
+              Review your message
+            </h3>
+            <div className="space-y-4 mb-8">
+              <div>
+                <p className="text-[10px] text-[#7e7576] dark:text-[#94a3b8] font-[family-name:var(--font-mono)] tracking-wider uppercase mb-1">
+                  Name
+                </p>
+                <p className="text-black dark:text-white font-medium">{formData.name}</p>
+              </div>
+              <div>
+                <p className="text-[10px] text-[#7e7576] dark:text-[#94a3b8] font-[family-name:var(--font-mono)] tracking-wider uppercase mb-1">
+                  Email
+                </p>
+                <p className="text-black dark:text-white font-medium">{formData.email}</p>
+              </div>
+              <div>
+                <p className="text-[10px] text-[#7e7576] dark:text-[#94a3b8] font-[family-name:var(--font-mono)] tracking-wider uppercase mb-1">
+                  Message
+                </p>
+                <p className="text-[#4c4546] dark:text-[#94a3b8] text-sm leading-relaxed">
+                  {formData.message}
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowConfirm(false)}
+                className="flex-1 px-5 py-2.5 border border-gray-300 dark:border-[#334155] text-[#4c4546] dark:text-[#94a3b8] rounded-lg hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-colors text-sm font-[family-name:var(--font-mono)] tracking-wider"
+              >
+                CANCEL
+              </button>
+              <button
+                onClick={handleConfirm}
+                className="flex-1 px-5 py-2.5 bg-black dark:bg-white text-white dark:text-black rounded-lg hover:opacity-80 transition-opacity text-sm font-[family-name:var(--font-mono)] tracking-wider font-semibold"
+              >
+                CONFIRM SEND
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

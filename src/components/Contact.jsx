@@ -30,11 +30,20 @@ export default function Contact() {
       return () => reveals.forEach((r) => observer.unobserve(r))
     }
 
-    if (!document.querySelector('script[src*="web3forms.com/client/script.js"]')) {
-      const script = document.createElement('script')
-      script.src = 'https://web3forms.com/client/script.js'
-      script.async = true
-      document.body.appendChild(script)
+    const attemptCaptchaRender = () => {
+      const captchaEl = document.querySelector('.h-captcha')
+      if (captchaEl && window.hcaptcha) {
+        try { window.hcaptcha.render(captchaEl) } catch {}
+        return true
+      }
+      return false
+    }
+
+    if (!attemptCaptchaRender()) {
+      const interval = setInterval(() => {
+        if (attemptCaptchaRender()) clearInterval(interval)
+      }, 300)
+      setTimeout(() => clearInterval(interval), 10000)
     }
   }, [])
 
@@ -190,7 +199,7 @@ export default function Contact() {
                   placeholder="Tell me about your project or opportunity..."
                 />
               </div>
-              <div className="h-captcha" data-captcha="true"></div>
+              <div className="h-captcha" data-captcha="true" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"></div>
               <button
                 type="submit"
                 className={`w-full px-8 py-3 font-semibold font-[family-name:var(--font-mono)] text-sm tracking-wider rounded-lg transition-all duration-300 ${

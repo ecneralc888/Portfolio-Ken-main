@@ -7,9 +7,9 @@ export default function Contact() {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
-  const [showConfirm, setShowConfirm] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
   const sectionRef = useRef(null)
-  const formRef = useRef(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -27,23 +27,24 @@ export default function Contact() {
     if (el) {
       const reveals = el.querySelectorAll('.reveal')
       reveals.forEach((r) => observer.observe(r))
-      return () => reveals.forEach((r) => observer.unobserve(r))
     }
 
-    const attemptCaptchaRender = () => {
+    const checkCaptcha = setInterval(() => {
       const captchaEl = document.querySelector('.h-captcha')
       if (captchaEl && window.hcaptcha) {
-        try { window.hcaptcha.render(captchaEl) } catch {}
-        return true
+        try {
+          window.hcaptcha.render(captchaEl)
+          clearInterval(checkCaptcha)
+        } catch {}
       }
-      return false
-    }
+    }, 300)
 
-    if (!attemptCaptchaRender()) {
-      const interval = setInterval(() => {
-        if (attemptCaptchaRender()) clearInterval(interval)
-      }, 300)
-      setTimeout(() => clearInterval(interval), 10000)
+    return () => {
+      if (el) {
+        const reveals = el.querySelectorAll('.reveal')
+        reveals.forEach((r) => observer.unobserve(r))
+      }
+      clearInterval(checkCaptcha)
     }
   }, [])
 
@@ -51,29 +52,32 @@ export default function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setShowConfirm(true)
-  }
+    setError('')
+    setSending(true)
 
-  const handleConfirm = async () => {
-    setShowConfirm(false)
+    const formData = new FormData(e.target)
+    formData.append('access_key', '70d173bb-ab8f-4742-8fd4-62ac0178c962')
 
-    const formDataObj = new FormData(formRef.current)
-    const data = Object.fromEntries(formDataObj)
-    const json = JSON.stringify(data)
-
-    await fetch('https://api.web3forms.com/submit', {
+    const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: json,
+      body: formData,
     })
+    const data = await response.json()
+    console.log('Web3Forms response:', data)
 
-    setSubmitted(true)
-    setTimeout(() => {
-      setFormData({ name: '', email: '', message: '' })
-      setSubmitted(false)
-    }, 4000)
+    setSending(false)
+
+    if (data.success) {
+      setSubmitted(true)
+      setTimeout(() => {
+        setFormData({ name: '', email: '', message: '' })
+        setSubmitted(false)
+      }, 4000)
+    } else {
+      setError(data.message || 'Submission failed. Please check the captcha.')
+    }
   }
 
   return (
@@ -155,13 +159,9 @@ export default function Contact() {
 
           <div className="reveal" style={{ animationDelay: '0.2s' }}>
             <form
-              ref={formRef}
               onSubmit={handleSubmit}
-              action="https://api.web3forms.com/submit"
-              method="POST"
               className="space-y-6"
             >
-              <input type="hidden" name="access_key" value="70d173bb-ab8f-4742-8fd4-62ac0178c962" />
               <input type="hidden" name="subject" value="New Contact Form Submission from Portfolio" />
               <div className="border-b border-gray-300 dark:border-[#334155] focus-within:border-[#0058be] dark:focus-within:border-[#60a5fa] transition-colors">
                 <input
@@ -200,66 +200,26 @@ export default function Contact() {
                 />
               </div>
               <div className="h-captcha" data-captcha="true" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"></div>
+              {error && (
+                <p className="text-red-500 text-sm text-center">{error}</p>
+              )}
               <button
                 type="submit"
+                disabled={sending}
                 className={`w-full px-8 py-3 font-semibold font-[family-name:var(--font-mono)] text-sm tracking-wider rounded-lg transition-all duration-300 ${
                   submitted
                     ? 'bg-green-500 text-white'
+                    : sending
+                    ? 'bg-gray-400 dark:bg-gray-600 text-white cursor-not-allowed'
                     : 'bg-black dark:bg-white text-white dark:text-black hover:opacity-80'
                 }`}
               >
-                {submitted ? 'MESSAGE SENT ✓' : 'SEND MESSAGE'}
+                {submitted ? 'MESSAGE SENT ✓' : sending ? 'SENDING...' : 'SEND MESSAGE'}
               </button>
             </form>
           </div>
         </div>
       </div>
-
-      {showConfirm && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white dark:bg-[#1a1c1c] border border-gray-200 dark:border-[#334155] rounded-2xl p-8 max-w-md w-full shadow-2xl">
-            <h3 className="text-xl font-[family-name:var(--font-display)] font-bold text-black dark:text-white mb-6">
-              Review your message
-            </h3>
-            <div className="space-y-4 mb-8">
-              <div>
-                <p className="text-[10px] text-[#7e7576] dark:text-[#94a3b8] font-[family-name:var(--font-mono)] tracking-wider uppercase mb-1">
-                  Name
-                </p>
-                <p className="text-black dark:text-white font-medium">{formData.name}</p>
-              </div>
-              <div>
-                <p className="text-[10px] text-[#7e7576] dark:text-[#94a3b8] font-[family-name:var(--font-mono)] tracking-wider uppercase mb-1">
-                  Email
-                </p>
-                <p className="text-black dark:text-white font-medium">{formData.email}</p>
-              </div>
-              <div>
-                <p className="text-[10px] text-[#7e7576] dark:text-[#94a3b8] font-[family-name:var(--font-mono)] tracking-wider uppercase mb-1">
-                  Message
-                </p>
-                <p className="text-[#4c4546] dark:text-[#94a3b8] text-sm leading-relaxed">
-                  {formData.message}
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <button
-                onClick={() => setShowConfirm(false)}
-                className="flex-1 px-5 py-2.5 border border-gray-300 dark:border-[#334155] text-[#4c4546] dark:text-[#94a3b8] rounded-lg hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-colors text-sm font-[family-name:var(--font-mono)] tracking-wider"
-              >
-                CANCEL
-              </button>
-              <button
-                onClick={handleConfirm}
-                className="flex-1 px-5 py-2.5 bg-black dark:bg-white text-white dark:text-black rounded-lg hover:opacity-80 transition-opacity text-sm font-[family-name:var(--font-mono)] tracking-wider font-semibold"
-              >
-                CONFIRM SEND
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   )
 }

@@ -29,6 +29,13 @@ export default function Contact() {
       reveals.forEach((r) => observer.observe(r))
       return () => reveals.forEach((r) => observer.unobserve(r))
     }
+
+    if (!document.querySelector('script[src*="web3forms.com/client/script.js"]')) {
+      const script = document.createElement('script')
+      script.src = 'https://web3forms.com/client/script.js'
+      script.async = true
+      document.body.appendChild(script)
+    }
   }, [])
 
   const handleChange = (e) => {

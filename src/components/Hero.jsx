@@ -38,7 +38,7 @@ export default function Hero() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 dark:border-[#334155] bg-white dark:bg-[#1a1c1c] mb-8">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse-soft" />
               <span className="text-xs font-[family-name:var(--font-mono)] text-[#4c4546] dark:text-[#94a3b8] tracking-wider">
-                AVAILABLE FOR INTERNSHIP
+                Open to Work
               </span>
             </div>
 

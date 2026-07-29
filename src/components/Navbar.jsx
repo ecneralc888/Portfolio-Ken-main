@@ -42,11 +42,6 @@ export default function Navbar() {
   return (
     <div className={`fixed top-3 left-0 right-0 z-50 flex justify-center px-6 transition-transform duration-300 ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
       <nav className="flex items-center gap-2 bg-white/80 dark:bg-[#1a1c1c]/80 backdrop-blur-xl border border-gray-200 dark:border-[#334155] rounded-full px-3 py-2 shadow-[0_2px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_32px_rgba(0,0,0,0.2)]">
-        <a href="#home" className="flex items-center gap-2 px-4 py-1.5 font-[family-name:var(--font-mono)] text-sm font-medium text-black dark:text-white tracking-wider">
-          <span className="material-symbols-outlined text-[20px]">grid_view</span>
-          JKG.
-        </a>
-
         <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => {
             const sectionId = link.href.slice(1)

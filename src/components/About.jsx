@@ -50,7 +50,7 @@ export default function About() {
 
           <div className="reveal" style={{ animationDelay: '0.2s' }}>
             <p className="text-[#4c4546] dark:text-[#94a3b8] leading-relaxed mb-6 text-lg">
-              I'm a BSIT student at STI College Balagtas, graduating in 2026. My journey into frontend development started with curiosity about how websites work — and turned into a passion for building clean, responsive interfaces that people enjoy using.
+              I'm a BSIT student at STI College Balagtas, graduating in 2026. My journey into frontend development started with curiosity about how websites work  and turned into a passion for building clean, responsive interfaces that people enjoy using.
             </p>
             <p className="text-[#4c4546] dark:text-[#94a3b8] leading-relaxed mb-6">
               During my internship at Boon Pharma Corp, I worked on front-end features for an e-commerce platform, where I learned what it takes to build for real users in a professional environment. I'm currently expanding my skills in modern frameworks and best practices.

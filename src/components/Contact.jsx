@@ -10,7 +10,6 @@ export default function Contact() {
   const [showConfirm, setShowConfirm] = useState(false)
   const sectionRef = useRef(null)
   const formRef = useRef(null)
-  const confirmedRef = useRef(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -37,23 +36,28 @@ export default function Contact() {
   }
 
   const handleSubmit = (e) => {
-    if (!confirmedRef.current) {
-      e.preventDefault()
-      setShowConfirm(true)
-      return
-    }
-    confirmedRef.current = false
+    e.preventDefault()
+    setShowConfirm(true)
+  }
+
+  const handleConfirm = async () => {
+    setShowConfirm(false)
+
+    const formDataObj = new FormData(formRef.current)
+    const data = Object.fromEntries(formDataObj)
+    const json = JSON.stringify(data)
+
+    await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: json,
+    })
+
     setSubmitted(true)
     setTimeout(() => {
       setFormData({ name: '', email: '', message: '' })
       setSubmitted(false)
     }, 4000)
-  }
-
-  const handleConfirm = () => {
-    setShowConfirm(false)
-    confirmedRef.current = true
-    formRef.current.requestSubmit()
   }
 
   return (

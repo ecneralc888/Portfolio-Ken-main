@@ -33,13 +33,21 @@ export default function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setSubmitted(true)
-    setTimeout(() => {
-      setFormData({ name: '', email: '', message: '' })
-      setSubmitted(false)
-    }, 3000)
+
+    const formDataObj = new FormData(e.target)
+    const data = Object.fromEntries(formDataObj)
+    const json = JSON.stringify(data)
+
+    await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: json,
+    })
+
+    setFormData({ name: '', email: '', message: '' })
   }
 
   return (
@@ -120,7 +128,10 @@ export default function Contact() {
           </div>
 
           <div className="reveal" style={{ animationDelay: '0.2s' }}>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} action="https://api.web3forms.com/submit" method="POST" className="space-y-6">
+              <input type="hidden" name="access_key" value="70d173bb-ab8f-4742-8fd4-62ac0178c962" />
+              <input type="hidden" name="subject" value="New Contact Form Submission from Portfolio" />
+              <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
               <div className="border-b border-gray-300 dark:border-[#334155] focus-within:border-[#0058be] dark:focus-within:border-[#60a5fa] transition-colors">
                 <input
                   type="text"

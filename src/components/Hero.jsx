@@ -50,7 +50,7 @@ export default function Hero() {
             </h1>
 
             <p className="text-lg sm:text-xl text-[#4c4546] dark:text-[#94a3b8] font-medium mb-3">
-              Frontend Developer & BSIT Student
+              IT Support & Front-End Developer
             </p>
 
             <p className="text-base text-[#4c4546] dark:text-[#94a3b8] leading-relaxed max-w-lg mb-8">

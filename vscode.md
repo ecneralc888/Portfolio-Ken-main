@@ -1,65 +1,22 @@
-# VS Code Git Workflow — Live Update Your Portfolio
-
-This is how you update your portfolio and have it go live automatically.
-
-## The loop
-
-```
-edit files → git add -A → git commit -m "message" → git push → Vercel auto-deploys
-```
-
-## Open the terminal in VS Code
-
-1. **File → Open Folder** → `C:\Users\neknh\OneDrive\Pictures\Portfolio-Ken-main`
-2. **Terminal → New Terminal** (or press `` Ctrl + ` ``)
-3. Make sure you're in the right folder:
-   ```
-   pwd
-   ```
-   It should print `C:\Users\neknh\OneDrive\Pictures\Portfolio-Ken-main`.
-   If not:
-   ```
-   cd C:\Users\neknh\OneDrive\Pictures\Portfolio-Ken-main
-   ```
-
-## Daily update commands
-
-```
-git status          # see what changed before you commit
-git add -A          # stage all changes (no output = normal)
-git commit -m "your message here"   # save a version with a note
-git push            # send to GitHub → Vercel rebuilds your site
-```
-
-### What each output means
-
-| Command | Expected output |
-|---|---|
-| `git status` | `modified: src/components/...` or `working tree clean` |
-| `git add -A` | nothing (normal) |
-| `git commit -m "..."` | `[main 4a8d2ef] your message here` |
-| `git push` | `main -> main` / `up to date` — done |
-
-Your site updates at https://portfolio-johnken.vercel.app within ~1 minute.
-
-## Easier way — Source Control panel (no typing)
-
-1. Click the **branch icon** on the left sidebar (or press `Ctrl + Shift + G`)
-2. Type your message in the box at the top
-3. Click the **Commit** checkmark (✓)
-4. Click the **Sync / Push** icon (circle arrows) at the top right
-
-## Run npm in the same terminal
-
-```
-npm run dev       # preview your site locally (Ctrl+C to stop)
-npm run build     # build a production version
-npm run lint      # check code for errors
-```
-
-## Troubleshooting
-
-- **`git status` shows modified files** — you edited but haven't committed yet. Just run `git add -A`, `git commit`, `git push`.
-- **Site not updating after push** — wait ~1 minute, or check Vercel at https://vercel.com (Deployments).
-- **File locked / weird errors** — your folder is in OneDrive; let OneDrive finish syncing before pushing.
-- **`git push` asks for login** — sign in with GitHub as `ecneralc888` (browser popup).
+Confirmed: it's your repo and we'll keep the folder where it is. Here's the final plan.
+Plan: Connect local portfolio to GitHub + Vercel
+1. Fix remote URL (in C:\Users\neknh\OneDrive\Pictures\Portfolio-Ken-main)
+- git remote set-url origin https://github.com/ecneralc888/Portfolio-Ken-main.git
+2. Fetch the existing history
+- git fetch origin — downloads all 17 commits
+3. Link local main to origin/main
+- git reset origin/main (mixed reset — your files stay untouched, history now tracks the repo)
+- Verify with git status → should show "working tree clean" (files already match)
+4. Push to GitHub (first time only)
+- git push -u origin main
+- Git Credential Manager will pop a browser login — sign in as ecneralc888
+5. Verify live update
+- Check https://portfolio-johnken.vercel.app — it should auto-redeploy within ~1 minute of the push
+- If it doesn't, the repo isn't imported in Vercel and we'll fix that next
+6. Your daily workflow (after this is set up):
+git add -A
+git commit -m "what you changed"
+git push
+Push to main → Vercel rebuilds → your portfolio updates automatically.
+Note: since the folder stays in OneDrive, avoid having OneDrive actively syncing while git operations run to reduce lock/conflict risk.
+Ready when you are — approve to start execution.
